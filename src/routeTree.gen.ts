@@ -13,13 +13,18 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoStorybookRouteImport } from './routes/demo/storybook'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
+import { Route as authLayoutRouteRouteImport } from './routes/(auth)/_layout/route'
 import { Route as DemoStartServerFuncsRouteImport } from './routes/demo/start.server-funcs'
 import { Route as DemoStartApiRequestRouteImport } from './routes/demo/start.api-request'
 import { Route as DemoFormSimpleRouteImport } from './routes/demo/form.simple'
 import { Route as DemoFormAddressRouteImport } from './routes/demo/form.address'
 import { Route as DemoApiTqTodosRouteImport } from './routes/demo/api.tq-todos'
 import { Route as DemoApiNamesRouteImport } from './routes/demo/api.names'
+import { Route as authLayoutRegisterRouteRouteImport } from './routes/(auth)/_layout/register/route'
+import { Route as authLayoutLoginRouteRouteImport } from './routes/(auth)/_layout/login/route'
 import { Route as DemoStartSsrIndexRouteImport } from './routes/demo/start.ssr.index'
+import { Route as authLayoutRegisterIndexRouteImport } from './routes/(auth)/_layout/register/index'
+import { Route as authLayoutLoginIndexRouteImport } from './routes/(auth)/_layout/login/index'
 import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr.spa-mode'
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
 import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
@@ -42,6 +47,10 @@ const DemoStorybookRoute = DemoStorybookRouteImport.update({
 const DemoStoreRoute = DemoStoreRouteImport.update({
   id: '/demo/store',
   path: '/demo/store',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authLayoutRouteRoute = authLayoutRouteRouteImport.update({
+  id: '/(auth)/_layout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemoStartServerFuncsRoute = DemoStartServerFuncsRouteImport.update({
@@ -74,10 +83,30 @@ const DemoApiNamesRoute = DemoApiNamesRouteImport.update({
   path: '/demo/api/names',
   getParentRoute: () => rootRouteImport,
 } as any)
+const authLayoutRegisterRouteRoute = authLayoutRegisterRouteRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => authLayoutRouteRoute,
+} as any)
+const authLayoutLoginRouteRoute = authLayoutLoginRouteRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => authLayoutRouteRoute,
+} as any)
 const DemoStartSsrIndexRoute = DemoStartSsrIndexRouteImport.update({
   id: '/demo/start/ssr/',
   path: '/demo/start/ssr/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const authLayoutRegisterIndexRoute = authLayoutRegisterIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => authLayoutRegisterRouteRoute,
+} as any)
+const authLayoutLoginIndexRoute = authLayoutLoginIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => authLayoutLoginRouteRoute,
 } as any)
 const DemoStartSsrSpaModeRoute = DemoStartSsrSpaModeRouteImport.update({
   id: '/demo/start/ssr/spa-mode',
@@ -100,6 +129,8 @@ export interface FileRoutesByFullPath {
   '/demo/store': typeof DemoStoreRoute
   '/demo/storybook': typeof DemoStorybookRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/login': typeof authLayoutLoginRouteRouteWithChildren
+  '/register': typeof authLayoutRegisterRouteRouteWithChildren
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
   '/demo/form/address': typeof DemoFormAddressRoute
@@ -109,6 +140,8 @@ export interface FileRoutesByFullPath {
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
+  '/login/': typeof authLayoutLoginIndexRoute
+  '/register/': typeof authLayoutRegisterIndexRoute
   '/demo/start/ssr': typeof DemoStartSsrIndexRoute
 }
 export interface FileRoutesByTo {
@@ -125,14 +158,19 @@ export interface FileRoutesByTo {
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
+  '/login': typeof authLayoutLoginIndexRoute
+  '/register': typeof authLayoutRegisterIndexRoute
   '/demo/start/ssr': typeof DemoStartSsrIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/(auth)/_layout': typeof authLayoutRouteRouteWithChildren
   '/demo/store': typeof DemoStoreRoute
   '/demo/storybook': typeof DemoStorybookRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/(auth)/_layout/login': typeof authLayoutLoginRouteRouteWithChildren
+  '/(auth)/_layout/register': typeof authLayoutRegisterRouteRouteWithChildren
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
   '/demo/form/address': typeof DemoFormAddressRoute
@@ -142,6 +180,8 @@ export interface FileRoutesById {
   '/demo/start/ssr/data-only': typeof DemoStartSsrDataOnlyRoute
   '/demo/start/ssr/full-ssr': typeof DemoStartSsrFullSsrRoute
   '/demo/start/ssr/spa-mode': typeof DemoStartSsrSpaModeRoute
+  '/(auth)/_layout/login/': typeof authLayoutLoginIndexRoute
+  '/(auth)/_layout/register/': typeof authLayoutRegisterIndexRoute
   '/demo/start/ssr/': typeof DemoStartSsrIndexRoute
 }
 export interface FileRouteTypes {
@@ -151,6 +191,8 @@ export interface FileRouteTypes {
     | '/demo/store'
     | '/demo/storybook'
     | '/demo/tanstack-query'
+    | '/login'
+    | '/register'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
     | '/demo/form/address'
@@ -160,6 +202,8 @@ export interface FileRouteTypes {
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
+    | '/login/'
+    | '/register/'
     | '/demo/start/ssr'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -176,13 +220,18 @@ export interface FileRouteTypes {
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
+    | '/login'
+    | '/register'
     | '/demo/start/ssr'
   id:
     | '__root__'
     | '/'
+    | '/(auth)/_layout'
     | '/demo/store'
     | '/demo/storybook'
     | '/demo/tanstack-query'
+    | '/(auth)/_layout/login'
+    | '/(auth)/_layout/register'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
     | '/demo/form/address'
@@ -192,11 +241,14 @@ export interface FileRouteTypes {
     | '/demo/start/ssr/data-only'
     | '/demo/start/ssr/full-ssr'
     | '/demo/start/ssr/spa-mode'
+    | '/(auth)/_layout/login/'
+    | '/(auth)/_layout/register/'
     | '/demo/start/ssr/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  authLayoutRouteRoute: typeof authLayoutRouteRouteWithChildren
   DemoStoreRoute: typeof DemoStoreRoute
   DemoStorybookRoute: typeof DemoStorybookRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
@@ -242,6 +294,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoStoreRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(auth)/_layout': {
+      id: '/(auth)/_layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof authLayoutRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/demo/start/server-funcs': {
       id: '/demo/start/server-funcs'
       path: '/demo/start/server-funcs'
@@ -284,12 +343,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoApiNamesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(auth)/_layout/register': {
+      id: '/(auth)/_layout/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof authLayoutRegisterRouteRouteImport
+      parentRoute: typeof authLayoutRouteRoute
+    }
+    '/(auth)/_layout/login': {
+      id: '/(auth)/_layout/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof authLayoutLoginRouteRouteImport
+      parentRoute: typeof authLayoutRouteRoute
+    }
     '/demo/start/ssr/': {
       id: '/demo/start/ssr/'
       path: '/demo/start/ssr'
       fullPath: '/demo/start/ssr'
       preLoaderRoute: typeof DemoStartSsrIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/_layout/register/': {
+      id: '/(auth)/_layout/register/'
+      path: '/'
+      fullPath: '/register/'
+      preLoaderRoute: typeof authLayoutRegisterIndexRouteImport
+      parentRoute: typeof authLayoutRegisterRouteRoute
+    }
+    '/(auth)/_layout/login/': {
+      id: '/(auth)/_layout/login/'
+      path: '/'
+      fullPath: '/login/'
+      preLoaderRoute: typeof authLayoutLoginIndexRouteImport
+      parentRoute: typeof authLayoutLoginRouteRoute
     }
     '/demo/start/ssr/spa-mode': {
       id: '/demo/start/ssr/spa-mode'
@@ -315,8 +402,48 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface authLayoutLoginRouteRouteChildren {
+  authLayoutLoginIndexRoute: typeof authLayoutLoginIndexRoute
+}
+
+const authLayoutLoginRouteRouteChildren: authLayoutLoginRouteRouteChildren = {
+  authLayoutLoginIndexRoute: authLayoutLoginIndexRoute,
+}
+
+const authLayoutLoginRouteRouteWithChildren =
+  authLayoutLoginRouteRoute._addFileChildren(authLayoutLoginRouteRouteChildren)
+
+interface authLayoutRegisterRouteRouteChildren {
+  authLayoutRegisterIndexRoute: typeof authLayoutRegisterIndexRoute
+}
+
+const authLayoutRegisterRouteRouteChildren: authLayoutRegisterRouteRouteChildren =
+  {
+    authLayoutRegisterIndexRoute: authLayoutRegisterIndexRoute,
+  }
+
+const authLayoutRegisterRouteRouteWithChildren =
+  authLayoutRegisterRouteRoute._addFileChildren(
+    authLayoutRegisterRouteRouteChildren,
+  )
+
+interface authLayoutRouteRouteChildren {
+  authLayoutLoginRouteRoute: typeof authLayoutLoginRouteRouteWithChildren
+  authLayoutRegisterRouteRoute: typeof authLayoutRegisterRouteRouteWithChildren
+}
+
+const authLayoutRouteRouteChildren: authLayoutRouteRouteChildren = {
+  authLayoutLoginRouteRoute: authLayoutLoginRouteRouteWithChildren,
+  authLayoutRegisterRouteRoute: authLayoutRegisterRouteRouteWithChildren,
+}
+
+const authLayoutRouteRouteWithChildren = authLayoutRouteRoute._addFileChildren(
+  authLayoutRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  authLayoutRouteRoute: authLayoutRouteRouteWithChildren,
   DemoStoreRoute: DemoStoreRoute,
   DemoStorybookRoute: DemoStorybookRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,
