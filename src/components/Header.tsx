@@ -1,245 +1,94 @@
 import { Link } from "@tanstack/react-router";
-
+import { CircleUser, Menu, ShoppingCart, User, X } from "lucide-react";
 import { useState } from "react";
-import {
-	BookOpen,
-	ChevronDown,
-	ChevronRight,
-	ClipboardType,
-	Home,
-	Menu,
-	Network,
-	SquareFunction,
-	StickyNote,
-	Store,
-	X,
-} from "lucide-react";
+import logo from "@/logo.svg";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
+import { Label } from "./ui/label";
 
 export default function Header() {
 	const [isOpen, setIsOpen] = useState(false);
-	const [groupedExpanded, setGroupedExpanded] = useState<
-		Record<string, boolean>
-	>({});
+	// const [groupedExpanded, setGroupedExpanded] = useState<
+	//   Record<string, boolean>
+	// >({});
 
 	return (
 		<>
-			<header className="p-4 flex items-center bg-gray-800 text-white shadow-lg">
-				<button
-					onClick={() => setIsOpen(true)}
-					className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-					aria-label="Open menu"
-				>
-					<Menu size={24} />
-				</button>
-				<h1 className="ml-4 text-xl font-semibold">
-					<Link to="/">
-						<img
-							src="/tanstack-word-logo-white.svg"
-							alt="TanStack Logo"
-							className="h-10"
-						/>
-					</Link>
-				</h1>
-			</header>
-
-			<aside
-				className={`fixed top-0 left-0 h-full w-80 bg-gray-900 text-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
-					isOpen ? "translate-x-0" : "-translate-x-full"
-				}`}
-			>
-				<div className="flex items-center justify-between p-4 border-b border-gray-700">
-					<h2 className="text-xl font-bold">Navigation</h2>
-					<button
-						onClick={() => setIsOpen(false)}
-						className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
-						aria-label="Close menu"
-					>
-						<X size={24} />
-					</button>
-				</div>
-
-				<nav className="flex-1 p-4 overflow-y-auto">
-					<Link
-						to="/"
-						onClick={() => setIsOpen(false)}
-						className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-						activeProps={{
-							className:
-								"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
-						}}
-					>
-						<Home size={20} />
-						<span className="font-medium">Home</span>
-					</Link>
-
-					{/* Demo Links Start */}
-
-					<Link
-						to="/demo/tanstack-query"
-						onClick={() => setIsOpen(false)}
-						className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-						activeProps={{
-							className:
-								"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
-						}}
-					>
-						<Network size={20} />
-						<span className="font-medium">TanStack Query</span>
-					</Link>
-
-					<Link
-						to="/demo/storybook"
-						onClick={() => setIsOpen(false)}
-						className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-						activeProps={{
-							className:
-								"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
-						}}
-					>
-						<BookOpen size={20} />
-						<span className="font-medium">Storybook</span>
-					</Link>
-
-					<Link
-						to="/demo/store"
-						onClick={() => setIsOpen(false)}
-						className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-						activeProps={{
-							className:
-								"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
-						}}
-					>
-						<Store size={20} />
-						<span className="font-medium">Store</span>
-					</Link>
-
-					<Link
-						to="/demo/start/server-funcs"
-						onClick={() => setIsOpen(false)}
-						className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-						activeProps={{
-							className:
-								"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
-						}}
-					>
-						<SquareFunction size={20} />
-						<span className="font-medium">Start - Server Functions</span>
-					</Link>
-
-					<Link
-						to="/demo/start/api-request"
-						onClick={() => setIsOpen(false)}
-						className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-						activeProps={{
-							className:
-								"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
-						}}
-					>
-						<Network size={20} />
-						<span className="font-medium">Start - API Request</span>
-					</Link>
-
-					<div className="flex flex-row justify-between">
-						<Link
-							to="/demo/start/ssr"
+			{isOpen && (
+				<aside className="absolute flex flex-col items-center z-10 size-full bg-black">
+					<div className="flex justify-end w-full">
+						<X
 							onClick={() => setIsOpen(false)}
-							className="flex-1 flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-							activeProps={{
-								className:
-									"flex-1 flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
-							}}
-						>
-							<StickyNote size={20} />
-							<span className="font-medium">Start - SSR Demos</span>
-						</Link>
-						<button
-							className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
-							onClick={() =>
-								setGroupedExpanded((prev) => ({
-									...prev,
-									StartSSRDemo: !prev.StartSSRDemo,
-								}))
-							}
-						>
-							{groupedExpanded.StartSSRDemo ? (
-								<ChevronDown size={20} />
-							) : (
-								<ChevronRight size={20} />
-							)}
-						</button>
+							className="text-zinc-200 m-4 cursor-pointer "
+						/>
 					</div>
-					{groupedExpanded.StartSSRDemo && (
-						<div className="flex flex-col ml-4">
-							<Link
-								to="/demo/start/ssr/spa-mode"
-								onClick={() => setIsOpen(false)}
-								className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-								activeProps={{
-									className:
-										"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
-								}}
-							>
-								<StickyNote size={20} />
-								<span className="font-medium">SPA Mode</span>
-							</Link>
-
-							<Link
-								to="/demo/start/ssr/full-ssr"
-								onClick={() => setIsOpen(false)}
-								className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-								activeProps={{
-									className:
-										"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
-								}}
-							>
-								<StickyNote size={20} />
-								<span className="font-medium">Full SSR</span>
-							</Link>
-
-							<Link
-								to="/demo/start/ssr/data-only"
-								onClick={() => setIsOpen(false)}
-								className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-								activeProps={{
-									className:
-										"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
-								}}
-							>
-								<StickyNote size={20} />
-								<span className="font-medium">Data Only</span>
-							</Link>
-						</div>
-					)}
-
-					<Link
-						to="/demo/form/simple"
-						onClick={() => setIsOpen(false)}
-						className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-						activeProps={{
-							className:
-								"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
-						}}
-					>
-						<ClipboardType size={20} />
-						<span className="font-medium">Simple Form</span>
+					<div className="flex flex-col justify-center gap-y-2 items-center h-full w-[90%] max-w-2xl ">
+						<Label htmlFor="aside-search" className="text-zinc-200 self-start">
+							Search:{" "}
+						</Label>
+						{/*TODO: Debounce the search with and from backend */}
+						<Input
+							id="aside-search"
+							className="bg-zinc-200"
+							placeholder="Search..."
+						/>
+					</div>
+				</aside>
+			)}
+			<header className="p-4 bg-gray-700">
+				<nav className="flex justify-center relative md:grid md:grid-cols-[auto_60%] wrap md:justify-between">
+					{/*Aside Menu*/}
+					<Menu
+						className="absolute left-0 text-zinc-200 md:hidden h-full cursor-pointer"
+						onClick={() => setIsOpen(true)}
+					/>
+					{/*Logo*/}
+					<Link to="/" className="md:ml-16">
+						<img src={logo} className="invert" alt="Logo" />
 					</Link>
-
-					<Link
-						to="/demo/form/address"
-						onClick={() => setIsOpen(false)}
-						className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-						activeProps={{
-							className:
-								"flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2",
-						}}
-					>
-						<ClipboardType size={20} />
-						<span className="font-medium">Address Form</span>
-					</Link>
-
-					{/* Demo Links End */}
+					{/*Navigations*/}
+					<div className="hidden md:flex gap-x-2 items-center">
+						<Input
+							alt="Search Products"
+							placeholder="Search..."
+							className="xl:w-xl bg-zinc-200"
+						/>
+						<Link className="flex gap-x-2 h-full items-center" to="/cart">
+							<Button
+								type="button"
+								variant={"outline"}
+								className="cursor-pointer bg-transparent text-white"
+							>
+								<ShoppingCart className="w-4" />{" "}
+								<span className="hidden lg:inline">Cart</span>
+							</Button>
+						</Link>
+						<Link className="flex gap-x-2 h-full items-center" to="/account">
+							<Button
+								type="button"
+								variant={"outline"}
+								className="cursor-pointer bg-transparent text-white"
+							>
+								<User className="w-4" />{" "}
+								<span className="hidden lg:inline">Account</span>
+							</Button>
+						</Link>
+						<Link
+							className="flex gap-x-2 h-full items-center"
+							to="/become-seller"
+						>
+							<Button
+								type="button"
+								variant={"outline"}
+								className="cursor-pointer bg-transparent text-white"
+							>
+								<CircleUser className="w-4" />{" "}
+								<span className="hidden lg:inline">Become Seller</span>
+							</Button>
+						</Link>
+					</div>
 				</nav>
-			</aside>
+			</header>
 		</>
 	);
 }
