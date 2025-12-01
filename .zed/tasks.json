@@ -1,0 +1,21 @@
+[
+  {
+    "label": "Run HTTP Request",
+    "command": "httpyac",
+    "args": ["send", "--line", "$ZED_ROW", "$ZED_FILE"],
+    "tags": ["http-request"]
+  },
+  {
+    "label": "Run All HTTP Requests",
+    "command": "httpyac",
+    "args": ["send", "$ZED_FILE"],
+    "tags": ["http-request"]
+  },
+  {
+    "label": "Run Development Server",
+    "command": "pnpm",
+    "args": ["dev", "--host"],
+    "tags": ["development-server"],
+    "reveal": "no_focus"
+  }
+]

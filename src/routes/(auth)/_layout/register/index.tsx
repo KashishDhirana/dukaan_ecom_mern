@@ -1,18 +1,20 @@
-import { createFileRoute, useRouterState } from "@tanstack/react-router";
-import { createClientOnlyFn } from "@tanstack/react-start";
+import {
+  ClientOnly,
+  createFileRoute,
+  useRouterState,
+} from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(auth)/_layout/register/")({
-	component: HelloWorld,
+  component: HelloWorld,
 });
 
 function HelloWorld() {
-	const routerState = createClientOnlyFn(() => useRouterState().location);
-	const { pathname } = routerState();
-	return (
-		<div>
-			{pathname ?? "/(auth)/_layout/register/ [FALLBACK]"}
-			<br />
-			Register
-		</div>
-	);
+  const { pathname } = useRouterState().location;
+  return (
+    <ClientOnly fallback={<div>Loading content</div>}>
+      {pathname ?? "/(auth)/_layout/register/ [FALLBACK]"}
+      <br />
+      Register
+    </ClientOnly>
+  );
 }

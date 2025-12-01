@@ -15,8 +15,8 @@ const config = defineConfig({
     tailwindcss(),
     tanstackStart(),
     tanstackRouter({
-      // Todo: Enable in Production
-      autoCodeSplitting: false,
+      autoCodeSplitting: process.env.NODE_ENV === "production",
+      target: "react",
     }),
     nitroV2Plugin({
       preset: "node",

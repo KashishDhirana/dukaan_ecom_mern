@@ -1,9 +1,20 @@
-import { createFileRoute } from "@tanstack/react-router";
+import {
+  ClientOnly,
+  createFileRoute,
+  useRouterState,
+} from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(auth)/_layout/login/")({
-	component: RouteComponent,
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	return <div>Login</div>;
+  const { pathname } = useRouterState().location;
+  return (
+    <ClientOnly fallback={<div>Loading content</div>}>
+      {pathname ?? "/(auth)/_layout/login/ [FALLBACK]"}
+      <br />
+      Login
+    </ClientOnly>
+  );
 }

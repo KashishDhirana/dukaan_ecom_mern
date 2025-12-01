@@ -1,21 +1,18 @@
-import {
-	createFileRoute,
-	Outlet,
-	useRouterState,
-} from "@tanstack/react-router";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+import { env } from "@/env";
 
 export const Route = createFileRoute("/(auth)/_layout/login")({
-	component: RouteComponent,
+  component: RouteComponent,
+  head: () => ({
+    meta: [{ title: `${env.VITE_APP_TITLE} | Login` }],
+  }),
 });
 
 function RouteComponent() {
-	const { pathname } = useRouterState().location;
-
-	return (
-		<div>
-			<div>Route of "/(auth)/login/"!</div>
-			<div>{pathname}</div>
-			<Outlet />
-		</div>
-	);
+  return (
+    <div>
+      Route of "/(auth)/login"!
+      <Outlet />
+    </div>
+  );
 }
