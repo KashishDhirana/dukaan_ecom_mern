@@ -1,14 +1,11 @@
 import { createServerFn, createServerOnlyFn } from "@tanstack/react-start";
 
-const generateTrueFlag = createServerOnlyFn(() => {
+const flag = createServerOnlyFn(() => {
   return Math.round(Math.random());
 });
 
-export const alertMessage = createServerFn().handler(() => {
-  const chance = generateTrueFlag();
+export const alertMessage = createServerFn({ method: "GET" }).handler(() => {
+  const chance = flag();
   console.log(chance);
-  if (chance) {
-    return "This is serious alert";
-  }
-  return null;
+  return chance ? "This is serious alert" : null;
 });

@@ -14,8 +14,8 @@
   {
     "label": "Run Development Server",
     "command": "pnpm",
-    "args": ["dev", "--host"],
+    "args": ["dev"],
     "tags": ["development-server"],
-    "reveal": "no_focus"
+    "reveal": "never"
   }
 ]

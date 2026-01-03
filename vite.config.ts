@@ -4,23 +4,26 @@ import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import viteReact from "@vitejs/plugin-react";
 import viteTsConfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
-import { nitroV2Plugin } from "@tanstack/nitro-v2-vite-plugin";
+import { nitro } from "nitro/vite";
+// import { nitroV2Plugin } from "@tanstack/nitro-v2-vite-plugin";
 
 const config = defineConfig({
   plugins: [
-    // this is the plugin that enables path aliases
     viteTsConfigPaths({
       projects: ["./tsconfig.json"],
     }),
     tailwindcss(),
+    process.env.NODE_ENV === "production" &&
+      tanstackRouter({
+        autoCodeSplitting: true,
+        target: "react",
+      }),
     tanstackStart(),
-    tanstackRouter({
-      autoCodeSplitting: process.env.NODE_ENV === "production",
-      target: "react",
-    }),
-    nitroV2Plugin({
-      preset: "node",
-    }),
+    // nitroV2Plugin({
+    //   preset: "node",
+    // }),
+    nitro(),
+
     viteReact({
       babel: {
         plugins: ["babel-plugin-react-compiler"],

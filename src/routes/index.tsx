@@ -1,7 +1,5 @@
-import { ClientOnly, createFileRoute } from "@tanstack/react-router";
-import { CarouselPlugin } from "./-components/CarouselPlugin";
-import { CrouselList } from "./-components/CraouselList";
-import { ProductsBentoGrid } from "./-components/ProductsBentoGrid";
+import { createFileRoute } from "@tanstack/react-router";
+import { CarouselList, CarouselPlugin, ProductsBentoGrid } from "./-components";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -10,17 +8,9 @@ export const Route = createFileRoute("/")({
 function App() {
   return (
     <>
-      <ClientOnly
-        fallback={<strong className="text-2xl">Loading the carousel</strong>}
-      >
-        <CarouselPlugin />
-      </ClientOnly>
+      <CarouselPlugin />
       <ProductsBentoGrid />
-      <ClientOnly
-        fallback={<strong className="text-2xl">Loading the carousel</strong>}
-      >
-        <CrouselList />
-      </ClientOnly>
+      <CarouselList />
     </>
   );
 }
