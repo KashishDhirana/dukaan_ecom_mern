@@ -12,5 +12,5 @@ function HelloWorld() {
 			<br />
 			Register
 		</div>
-	)
+	);
 }

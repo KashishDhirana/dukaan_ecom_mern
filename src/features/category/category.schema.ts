@@ -64,13 +64,13 @@ import { MongooseBaseDocZodSchema } from "@/utils/zod.utils";
 // ];
 
 export const CategoryZodSchema = z.object({
-  ...MongooseBaseDocZodSchema.shape,
-  name: z.string().min(1, "Category name is required"),
-  slug: z
-    .string()
-    .min(1)
-    .regex(/^[a-z0-9]+(?:_[a-z0-9]+)*$/, {
-      message: "Slug must be lowercase and underscore-separated",
-    }),
-  parentId: MongooseBaseDocZodSchema.shape.id,
+	...MongooseBaseDocZodSchema.shape,
+	name: z.string().min(1, "Category name is required"),
+	slug: z
+		.string()
+		.min(1)
+		.regex(/^[a-z0-9]+(?:_[a-z0-9]+)*$/, {
+			message: "Slug must be lowercase and underscore-separated",
+		}),
+	parentId: MongooseBaseDocZodSchema.shape.id,
 });

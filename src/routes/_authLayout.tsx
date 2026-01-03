@@ -1,13 +1,13 @@
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/_authLayout")({
-  component: RouteComponent,
+	component: RouteComponent,
 });
 
 function RouteComponent() {
-  return (
-    <section className="p-8">
-      <Outlet />
-    </section>
-  );
+	return (
+		<section className="p-8">
+			<Outlet />
+		</section>
+	);
 }

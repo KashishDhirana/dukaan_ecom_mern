@@ -79,11 +79,8 @@ export interface IUserQueryHelpers {
 	>;
 }
 
-export interface IUserModel extends Model<
-	ZodUserType,
-	IUserQueryHelpers,
-	IUserMethods
-> {
+export interface IUserModel
+	extends Model<ZodUserType, IUserQueryHelpers, IUserMethods> {
 	getModelByRole(
 		role: RoleType,
 	): DiscriminatorModel<"role", ZodUserType["role"]>;

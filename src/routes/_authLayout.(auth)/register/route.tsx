@@ -14,5 +14,5 @@ function RouteComponent() {
 			Route of "/(auth)/register"!
 			<Outlet />
 		</div>
-	)
+	);
 }
